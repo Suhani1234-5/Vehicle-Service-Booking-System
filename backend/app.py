@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from config import app, mysql
 import models
 import services
 
 CORS(app)
+
+@app.route('/')
+def home():
+    return jsonify({"message": "Flask backend is running successfully!"})
 
 # --------- Auth Routes ---------
 @app.route('/register', methods=['POST'])
@@ -25,7 +29,9 @@ def login():
 @app.route('/vehicles', methods=['POST'])
 def add_vehicle():
     data = request.json
-    result = services.add_new_vehicle(data['user_id'], data['vehicle_name'], data['vehicle_model'], data['vehicle_number'])
+    result = services.add_new_vehicle(
+        data['user_id'], data['vehicle_name'], data['vehicle_model'], data['vehicle_number']
+    )
     return jsonify(result)
 
 @app.route('/vehicles/<int:user_id>', methods=['GET'])
@@ -43,7 +49,10 @@ def get_services():
 @app.route('/bookings', methods=['POST'])
 def create_booking():
     data = request.json
-    result = services.book_service(data['user_id'], data['vehicle_id'], data['service_id'], data['booking_date'], data['booking_time'])
+    result = services.book_service(
+        data['user_id'], data['vehicle_id'], data['service_id'],
+        data['booking_date'], data['booking_time']
+    )
     return jsonify(result)
 
 @app.route('/bookings/<int:user_id>', methods=['GET'])
@@ -57,6 +66,5 @@ def update_booking_status():
     result = services.change_booking_status(data['booking_id'], data['status'])
     return jsonify(result)
 
-# --------- Run App ---------
 if __name__ == '__main__':
     app.run(debug=True)
