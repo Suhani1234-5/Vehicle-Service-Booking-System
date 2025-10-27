@@ -1,3 +1,5 @@
+# backend/app.py
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash

@@ -1,3 +1,5 @@
+# backend/models.py
+
 from config import mysql
 
 # --------- USERS ---------

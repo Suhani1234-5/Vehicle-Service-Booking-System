@@ -1,3 +1,5 @@
+# backend/routes/bookings.py
+
 @app.route('/bookings', methods=['POST'])
 def book_service():
     data = request.json
