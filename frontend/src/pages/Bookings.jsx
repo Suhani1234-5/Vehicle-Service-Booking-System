@@ -52,26 +52,35 @@ const Bookings = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await createBooking({
-        user_id: user.user_id,
-        ...formData,
-      });
-      alert('Booking created successfully!');
-      setShowModal(false);
-      setFormData({
-        vehicle_id: '',
-        service_id: '',
-        booking_date: '',
-        booking_time: '',
-      });
-      fetchData();
-    } catch (error) {
-      alert('Failed to create booking');
+  // ✅ add this function before return()
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await createBooking({
+      user_id: user.user_id,
+      ...formData,
+    });
+
+    if (response.data.error) {
+      alert(response.data.error);
+      return;
     }
-  };
+
+    alert(response.data.message || 'Booking created successfully!');
+    setShowModal(false);
+    setFormData({
+      vehicle_id: '',
+      service_id: '',
+      booking_date: '',
+      booking_time: '',
+    });
+    fetchData();
+  } catch (error) {
+    console.error('Error creating booking:', error);
+    alert('Failed to create booking. Please try again.');
+  }
+};
+
 
   const getStatusColor = (status) => {
     switch (status) {

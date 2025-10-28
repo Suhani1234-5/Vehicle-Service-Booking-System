@@ -1,6 +1,7 @@
 # backend/models.py
 
 from config import mysql
+import MySQLdb 
 
 # --------- USERS ---------
 def create_user(name, email, password, role='customer'):
@@ -19,13 +20,24 @@ def get_user_by_email(email):
     return user
 
 # --------- VEHICLES ---------
+
 def add_vehicle(user_id, vehicle_name, vehicle_model, vehicle_number):
     cursor = mysql.connection.cursor()
-    cursor.execute("INSERT INTO vehicles(user_id, vehicle_name, vehicle_model, vehicle_number) VALUES (%s,%s,%s,%s)",
-                   (user_id, vehicle_name, vehicle_model, vehicle_number))
-    mysql.connection.commit()
-    cursor.close()
-    return True
+    try:
+        cursor.execute(
+            "INSERT INTO vehicles(user_id, vehicle_name, vehicle_model, vehicle_number) VALUES (%s,%s,%s,%s)",
+            (user_id, vehicle_name, vehicle_model, vehicle_number)
+        )
+        mysql.connection.commit()
+        return {"success": True, "message": "Vehicle added successfully!"}
+    except MySQLdb.IntegrityError as e:
+        # Handle duplicate entry error
+        if "Duplicate entry" in str(e):
+            return {"error": "Vehicle number already exists. Please enter a unique number."}
+        else:
+            return {"error": "A database error occurred while adding the vehicle."}
+    finally:
+        cursor.close()
 
 def get_vehicles_by_user(user_id):
     cursor = mysql.connection.cursor()
