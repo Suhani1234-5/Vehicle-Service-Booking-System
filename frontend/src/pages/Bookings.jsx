@@ -99,14 +99,14 @@ const handleSubmit = async (e) => {
     }
   };
 
- const getVehicleName = (vehicleId) => {
-  const vehicle = vehicles.find((v) => v.id === vehicleId);
+const getVehicleName = (vehicleId) => {
+  const vehicle = vehicles.find((v) => v.id === Number(vehicleId));
   return vehicle ? vehicle.vehicle_name : 'Unknown Vehicle';
 };
 
 
 const getServiceName = (serviceId) => {
-  const service = services.find((s) => s.id === serviceId);
+  const service = services.find((s) => s.id === Number(serviceId));
   return service ? service.service_name : 'Unknown Service';
 };
 
@@ -170,61 +170,71 @@ const getServiceName = (serviceId) => {
           </div>
         ) : (
           <div className="space-y-4">
-            {bookings.map((booking) => (
-              <div
-                key={booking[0]}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition"
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div className="flex-1 mb-4 md:mb-0">
-                    <div className="flex items-center mb-2">
-                      <h3 className="text-xl font-bold text-gray-800 mr-3">
-                        Booking #{booking[0]}
-                      </h3>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
-                          booking[7]
-                        )}`}
-                      >
-                        {booking[7]}
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <p className="text-gray-500">Vehicle</p>
-                        <p className="font-semibold text-gray-800">
-                          {getVehicleName(booking[2])}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Service</p>
-                        <p className="font-semibold text-gray-800">
-                          {getServiceName(booking[3])}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Date</p>
-                        <p className="font-semibold text-gray-800">{booking[5]}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Time</p>
-                        <p className="font-semibold text-gray-800">{booking[6]}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex md:flex-col gap-2">
-                    <button className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition text-sm">
-                      View Details
-                    </button>
-                    {booking[7] === 'pending' && (
-                      <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm">
-                        Cancel
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+          {bookings.map((booking) => (
+  <div
+    key={booking.booking_id}
+    className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition"
+  >
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+      <div className="flex-1 mb-4 md:mb-0">
+        <div className="flex items-center mb-2">
+          <h3 className="text-xl font-bold text-gray-800 mr-3">
+            Booking #{booking.booking_id}
+          </h3>
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+              booking.status
+            )}`}
+          >
+            {booking.status}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <div>
+            <p className="text-gray-500">Vehicle</p>
+            <p className="font-semibold text-gray-800">
+              {getVehicleName(booking.vehicle_id)}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Service</p>
+            <p className="font-semibold text-gray-800">
+              {getServiceName(booking.service_id)}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Date</p>
+            <p className="font-semibold text-gray-800">
+              {booking.booking_date}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Time</p>
+            <p className="font-semibold text-gray-800">
+              {booking.booking_time}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex md:flex-col gap-2">
+        <button className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition text-sm">
+          View Details
+        </button>
+        {booking.status === 'pending' && (
+          <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm">
+            Cancel
+          </button>
+        )}
+      </div>
+    </div>
+  </div>
+))}
+
           </div>
         )}
 
