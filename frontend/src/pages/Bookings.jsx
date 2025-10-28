@@ -99,15 +99,17 @@ const handleSubmit = async (e) => {
     }
   };
 
-  const getVehicleName = (vehicleId) => {
-    const vehicle = vehicles.find((v) => v[0] === vehicleId);
-    return vehicle ? vehicle[2] : 'Unknown Vehicle';
-  };
+ const getVehicleName = (vehicleId) => {
+  const vehicle = vehicles.find((v) => v.id === vehicleId);
+  return vehicle ? vehicle.vehicle_name : 'Unknown Vehicle';
+};
 
-  const getServiceName = (serviceId) => {
-    const service = services.find((s) => s[0] === serviceId);
-    return service ? service[1] : 'Unknown Service';
-  };
+
+const getServiceName = (serviceId) => {
+  const service = services.find((s) => s.id === serviceId);
+  return service ? service.service_name : 'Unknown Service';
+};
+
 
   if (loading) {
     return (
@@ -246,19 +248,20 @@ const handleSubmit = async (e) => {
                     Select Vehicle
                   </label>
                   <select
-                    name="vehicle_id"
-                    value={formData.vehicle_id}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                    required
-                  >
-                    <option value="">Choose a vehicle</option>
-                    {vehicles.map((vehicle) => (
-                      <option key={vehicle[0]} value={vehicle[0]}>
-                        {vehicle[2]} - {vehicle[4]}
-                      </option>
-                    ))}
-                  </select>
+  name="vehicle_id"
+  value={formData.vehicle_id}
+  onChange={handleChange}
+  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
+  required
+>
+  <option value="">Choose a vehicle</option>
+  {vehicles.map((vehicle) => (
+    <option key={vehicle.id} value={vehicle.id}>
+      {vehicle.vehicle_name} - {vehicle.vehicle_number}
+    </option>
+  ))}
+</select>
+
                 </div>
 
                 <div className="mb-4">
