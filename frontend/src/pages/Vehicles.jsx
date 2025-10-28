@@ -105,29 +105,31 @@ const Vehicles = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {vehicles.map((vehicle) => (
-              <div
-                key={vehicle[0]}
-                className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition transform hover:-translate-y-1"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center">
-                    <span className="text-2xl">🚗</span>
-                  </div>
-                  <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-semibold">
-                    Active
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-1">
-                  {vehicle[2]}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">{vehicle[3]}</p>
-                <div className="pt-4 border-t border-gray-200">
-                  <p className="text-sm text-gray-500">Vehicle Number</p>
-                  <p className="font-semibold text-gray-800">{vehicle[4]}</p>
-                </div>
-              </div>
-            ))}
+          {vehicles.map((vehicle) => (
+  <div
+    key={vehicle.id}
+    className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition transform hover:-translate-y-1"
+  >
+    <div className="flex items-start justify-between mb-4">
+      <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center">
+        <span className="text-2xl">🚗</span>
+      </div>
+      <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-semibold">
+        Active
+      </span>
+    </div>
+
+    <h3 className="text-xl font-bold text-gray-800 mb-1">
+      {vehicle.vehicle_name}
+    </h3>
+    <p className="text-gray-600 text-sm mb-4">{vehicle.vehicle_model}</p>
+    <div className="pt-4 border-t border-gray-200">
+      <p className="text-sm text-gray-500">Vehicle Number</p>
+      <p className="font-semibold text-gray-800">{vehicle.vehicle_number}</p>
+    </div>
+  </div>
+))}
+
           </div>
         )}
 
